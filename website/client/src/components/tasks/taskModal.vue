@@ -887,6 +887,11 @@
       height: 1.5rem;
       align-items: center;
 
+      &:hover, &:focus, &:active {
+        text-decoration: underline;
+        text-decoration-color: $maroon-50;
+      }
+
       .delete-text {
         font-size: 14px;
         font-weight: normal;
@@ -1296,7 +1301,9 @@ export default {
   methods: {
     ...mapActions({ saveTask: 'tasks:save', destroyTask: 'tasks:destroy', createTask: 'tasks:create' }),
     async syncTask () {
-      if (this.task.group) this.managerNotes = this.task.group.managerNotes || null;
+      if (this.task && this.task.group) {
+        this.managerNotes = this.task.group.managerNotes || null;
+      }
       if (this.groupId && this.task.group && this.task.group.approval) {
         this.requiresApproval = this.task.group.approval.required;
       }

@@ -1,18 +1,24 @@
 .promo_armoire_backgrounds_202006 {
   background-image: url('~@/assets/images/sprites/spritesmith-largeSprites-0.png');
-  background-position: 0px 0px;
+  background-position: -259px 0px;
   width: 423px;
   height: 147px;
 }
 .promo_mystery_202006 {
   background-image: url('~@/assets/images/sprites/spritesmith-largeSprites-0.png');
-  background-position: 0px -148px;
+  background-position: 0px -259px;
   width: 282px;
   height: 147px;
 }
 .promo_take_this {
   background-image: url('~@/assets/images/sprites/spritesmith-largeSprites-0.png');
-  background-position: -283px -148px;
+  background-position: -259px -148px;
   width: 96px;
   height: 69px;
+}
+.scene_hiking {
+  background-image: url('~@/assets/images/sprites/spritesmith-largeSprites-0.png');
+  background-position: 0px 0px;
+  width: 258px;
+  height: 258px;
 }

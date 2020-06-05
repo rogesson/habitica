@@ -18,9 +18,8 @@
             v-b-tooltip.hover.left="$t('sendMessage')"
             class="btn btn-secondary message-icon"
           >
-            <div
-              class="svg-icon message-icon"
-              v-html="icons.message"
+            <div class="svg-icon message-icon"
+                 v-html="icons.message"
             ></div>
           </button>
         </router-link>
@@ -323,7 +322,7 @@
             >
               <div
                 :id="achievKey + '-achievement'"
-                class="box achievement-container d-flex align-items-center justify-content-center"
+                class="box achievement-container"
                 :class="{'achievement-unearned': !achievement.earned}"
               >
                 <b-popover
@@ -568,7 +567,6 @@
 
     .achievement-wrapper {
       width: 94px;
-      min-width: 94px !important;
       max-width: 94px;
       margin-right: 12px;
       margin-left: 12px;
@@ -578,6 +576,7 @@
     .box {
       margin: 0 auto;
       margin-bottom: 1em;
+      padding-top: 1.2em;
       background: $white;
     }
 
@@ -727,7 +726,6 @@ import lock from '@/assets/svg/lock.svg';
 import challenge from '@/assets/svg/challenge.svg';
 import member from '@/assets/svg/member-icon.svg';
 import staff from '@/assets/svg/tier-staff.svg';
-import svgClose from '@/assets/svg/close.svg';
 // @TODO: EMAILS.COMMUNITY_MANAGER_EMAIL
 const COMMUNITY_MANAGER_EMAIL = 'admin@habitica.com';
 
@@ -753,7 +751,6 @@ export default {
         lock,
         member,
         staff,
-        close: svgClose,
       }),
       adminToolsLoaded: false,
       userIdToMessage: '',
@@ -998,9 +995,6 @@ export default {
     toggleAchievementsCategory (categoryKey) {
       const status = this.achievementsCategories[categoryKey].open;
       this.achievementsCategories[categoryKey].open = !status;
-    },
-    close () {
-      this.$root.$emit('bv::hide::modal', 'profile');
     },
   },
 };

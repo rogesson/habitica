@@ -10,17 +10,18 @@
       <div
         :key="tag.id"
         :title="tag.name"
-        class="tag mr-1 mt-n1 d-inline-flex align-items-center"
+        class="tag mr-1 d-inline-flex align-items-center"
+        :class="{'mt-n1': maxTags !== 0}"
         v-for="tag in truncatedSelectedTags"
 
         @click.stop="removeTag($event, tag)"
       >
         <div
-          class="tag-label my-auto mx-2"
+          class="tag-label my-auto ml-75 mr-2"
           v-markdown="tag.name"
         ></div>
         <div
-          class="remove mt-n1 ml-auto mr-2"
+          class="remove ml-auto mr-75"
           v-html="icons.remove"
         ></div>
       </div>
@@ -28,7 +29,7 @@
         class="tags-more ml-75"
         v-if="remainingSelectedTags.length > 0"
       >
-        +{{ $t('more', { count: remainingSelectedTags.length }) }}
+        +{{remainingSelectedTags.length}}
       </div>
     </template>
   </div>
@@ -53,8 +54,15 @@
         }
       }
 
-      .remove svg path {
-        stroke: $gray-200;
+      .remove {
+        svg {
+          width: 0.5rem;
+          height: 0.5rem;
+
+          path {
+            stroke: $gray-200;
+          }
+        }
       }
     }
   }
@@ -71,7 +79,7 @@
       flex-wrap: wrap;
 
       .tag {
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.375rem;
       }
     }
   }
@@ -88,22 +96,26 @@
       height: 1rem;
 
       font-size: 12px;
-      line-height: 1.33;
+      line-height: 16px;
       letter-spacing: normal;
       color: $gray-100;
     }
 
     .remove {
       display: inline-block;
-      width: 0.313rem;
       object-fit: contain;
+      margin-top: -0.125rem;
     }
   }
 
   .tags-more {
-    color: $gray-300;
+    color: $gray-100;
     font-size: 12px;
     display: inline-block;
+    height: 1rem;
+    font-weight: bold;
+    line-height: 1.33;
+    letter-spacing: normal;
   }
 </style>
 

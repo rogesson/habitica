@@ -9,15 +9,16 @@
       ref="dropdown"
     >
       <b-dropdown-header>
-        <b-form-input type="text"
-                      :placeholder="$t('enterTag')"
-                      v-model="search"
-        />
+        <div class="mb-2">
+          <b-form-input type="text"
+                        :placeholder="$t('enterTag')"
+                        v-model="search"
+          />
+        </div>
 
         <tagList v-if="selectedTags.length > 0"
                  :tags="selectedTagsAsObjects"
                  @remove-tag="removeTag($event)"
-                 class="mt-2"
                  :max-tags="0" />
 
       </b-dropdown-header>
@@ -25,15 +26,17 @@
         <tag-list :tags="selectedTagsAsObjects"
                   @remove-tag="removeTag($event)"/>
       </template>
-      <b-dropdown-item-button
-        v-for="tag in availableToSelect"
-        :key="tag.id"
-        @click.prevent.stop="selectTag(tag)"
-        class="ignore-hide"
-        :class="{ 'none': tag.id === 'none' }"
-      >
-        {{ tag.name }}
-      </b-dropdown-item-button>
+      <div class="item-group">
+        <b-dropdown-item-button
+          v-for="tag in availableToSelect"
+          :key="tag.id"
+          @click.prevent.stop="selectTag(tag)"
+          class="ignore-hide tag-item"
+          :class="{ 'none': tag.id === 'none', selectListItem: true }"
+        >
+          <div class="label" v-markdown="tag.name"></div>
+        </b-dropdown-item-button>
+      </div>
     </b-dropdown>
 
   </div>
@@ -47,9 +50,17 @@
 <style lang="scss">
   @import '~@/assets/scss/colors.scss';
 
+  $itemHeight: 2rem;
+
   .select-tag {
+    .dropdown-toggle {
+      padding-left: 0.5rem;
+    }
+
     .dropdown-header {
       background-color: $gray-700;
+      padding-bottom: 0;
+      min-height: 3rem;
     }
 
     .dropdown-item, .dropdown-header {
@@ -61,6 +72,21 @@
       cursor: default;
       pointer-events: none;
     }
+
+    .tag-item button {
+      height: $itemHeight;
+
+      .label {
+        height: 1.5rem;
+        font-size: 14px;
+        line-height: 1.71;
+      }
+    }
+
+    .item-group {
+      max-height: #{5*$itemHeight};
+      overflow-y: scroll;
+    }
   }
 
 </style>
@@ -68,9 +94,11 @@
 <script>
 import Vue from 'vue';
 import TagList from '@/components/tasks/modal-controls/tagList';
+import markdownDirective from '@/directives/markdown';
 
 export default {
   directives: {
+    markdown: markdownDirective,
   },
   components: {
     TagList,
@@ -145,18 +173,7 @@ export default {
 
       const filteredItems = availableItems.filter(i => i.name.toLowerCase().includes(searchString));
 
-      const tagCount = filteredItems.length;
-
-      const result = filteredItems.slice(0, 5);
-
-      if (tagCount > 5) {
-        result.push({
-          id: 'none',
-          name: this.$t('moreTags', { amount: tagCount - 5 }),
-        });
-      }
-
-      return result;
+      return filteredItems;
     },
   },
   props: {

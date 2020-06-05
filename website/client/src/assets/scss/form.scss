@@ -19,7 +19,7 @@ label small {
 // Inputs and textareas
 
 input, textarea, input.form-control, textarea.form-control {
-  padding: 10px 16px;
+  padding: 10px 12px;
   border-radius: 2px;
   font-size: 14px;
   line-height: 1.43;
@@ -31,14 +31,14 @@ input, textarea, input.form-control, textarea.form-control {
   }
 
   &:active:not(:disabled), &:focus:not(:disabled) {
-    border-color: $purple-500;
+    border-color: $purple-400;
     outline: 0;
     box-shadow: none;
   }
 
   &:disabled {
     opacity: 0.64;
-    background: $gray-500;
+    background: $gray-700;
   }
 
   &.input-search {

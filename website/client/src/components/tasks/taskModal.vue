@@ -684,14 +684,23 @@
       transition: none;
     }
 
+    .form-control:not(.input-title):not(.input-notes):not(.checklist-item) {
+      height: 40px !important; // until the new changes of teams-2020 are applied
+    }
+
+    // until the new changes of teams-2020 are applied
+    .vdp-datepicker {
+      .input-group-append {
+        height: 40px !important;
+      }
+    }
+
     input, textarea {
       &:not(:host-context(.tags-popup)) {
         border: none;
       }
-
       transition-property: border-color, box-shadow, color, background;
       background-color: rgba(255, 255, 255, 0.5);
-
       &:focus, &:active, &:hover {
         background-color: rgba(255, 255, 255, 0.75);
       }
@@ -711,6 +720,10 @@
     .modal-header, .modal-body, .modal-footer {
       padding: 0px;
       border: none;
+    }
+
+    .cursor-auto {
+      cursor: auto;
     }
 
     .cursor-auto {
@@ -875,25 +888,21 @@
       }
     }
 
-    .delete-task-btn, .cancel-task-btn {
+        .delete-task-btn, .cancel-task-btn {
       cursor: pointer;
-
       &:hover, &:focus, &:active {
         text-decoration: underline;
       }
     }
-
     .delete-task-btn {
       margin-top: 32px;
       margin-bottom: 8px;
       height: 1.5rem;
       align-items: center;
-
       &:hover, &:focus, &:active {
         text-decoration: underline;
         text-decoration-color: $maroon-50;
       }
-
       .delete-text {
         font-size: 14px;
         font-weight: normal;
@@ -904,14 +913,12 @@
         color: $maroon-50;
         height: 1.5rem;
       }
-
       .svg-icon {
         svg {
           height: 1rem;
           width: 1rem;
           object-fit: contain;
         }
-
         margin-right: 0.5rem;
         color: $maroon-50;
       }
@@ -1010,37 +1017,30 @@
     &-container {
       min-width: 3rem;
       cursor: pointer;
-
       &:first-of-type {
         margin-right: 2rem;
       }
     }
-
     &-button {
       width: 2.5rem;
       height: 2.5rem;
       border-radius: 50%;
     }
-
     &-icon {
       width: 10px;
       height: 10px;
       color: $white;
-
       &.disabled {
         color: $gray-200;
       }
-
       &.negative {
         margin-top: 0.5rem;
       }
     }
-
     &-label {
       font-size: 12px;
       font-weight: bold;
       text-align: center;
-
       &.disabled {
         color: $gray-100;
         font-weight: normal;
@@ -1275,6 +1275,11 @@ export default {
       if (textClass.indexOf('purple') !== -1 || textClass.indexOf('worst') !== -1) return null;
       return textClass;
     },
+    cssClassHeadings () {
+      const textClass = this.cssClass('text');
+      if (textClass.indexOf('purple') !== -1 || textClass.indexOf('worst') !== -1) return null;
+      return textClass;
+    },
   },
   watch: {
     task () {
@@ -1337,9 +1342,14 @@ export default {
       this.syncTask();
     },
     cssClass (suffix) {
-      return this.task
-        ? this.getTaskClasses(this.task, `${this.purpose === 'edit' ? 'edit' : 'create'}-modal-${suffix}`)
-        : '';
+      if (!this.task) {
+        return '';
+      }
+
+      return this.getTaskClasses(this.task, `${this.purpose === 'edit' ? 'edit' : 'create'}-modal-${suffix}`);
+    },
+    closeTagsPopup () {
+      this.showTagsSelect = false;
     },
     setDifficulty (level) {
       if (this.challengeAccessRequired) return;

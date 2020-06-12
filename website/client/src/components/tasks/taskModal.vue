@@ -899,10 +899,12 @@
       margin-bottom: 8px;
       height: 1.5rem;
       align-items: center;
+
       &:hover, &:focus, &:active {
         text-decoration: underline;
         text-decoration-color: $maroon-50;
       }
+
       .delete-text {
         font-size: 14px;
         font-weight: normal;
@@ -913,12 +915,14 @@
         color: $maroon-50;
         height: 1.5rem;
       }
+
       .svg-icon {
         svg {
           height: 1rem;
           width: 1rem;
           object-fit: contain;
         }
+
         margin-right: 0.5rem;
         color: $maroon-50;
       }
@@ -1017,30 +1021,37 @@
     &-container {
       min-width: 3rem;
       cursor: pointer;
+
       &:first-of-type {
         margin-right: 2rem;
       }
     }
+
     &-button {
       width: 2.5rem;
       height: 2.5rem;
       border-radius: 50%;
     }
+
     &-icon {
       width: 10px;
       height: 10px;
       color: $white;
+
       &.disabled {
         color: $gray-200;
       }
+
       &.negative {
         margin-top: 0.5rem;
       }
     }
+
     &-label {
       font-size: 12px;
       font-weight: bold;
       text-align: center;
+
       &.disabled {
         color: $gray-100;
         font-weight: normal;

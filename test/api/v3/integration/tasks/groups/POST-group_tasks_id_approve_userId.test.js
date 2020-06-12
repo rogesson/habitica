@@ -69,11 +69,9 @@ describe('POST /tasks/:id/approve/:userId', () => {
 
     await member.sync();
 
-    expect(member.notifications.length).to.equal(3);
+    expect(member.notifications.length).to.equal(2);
     expect(member.notifications[1].type).to.equal('GROUP_TASK_APPROVED');
     expect(member.notifications[1].data.message).to.equal(t('yourTaskHasBeenApproved', { taskText: task.text }));
-    expect(member.notifications[2].type).to.equal('SCORED_TASK');
-    expect(member.notifications[2].data.message).to.equal(t('yourTaskHasBeenApproved', { taskText: task.text }));
 
     memberTasks = await member.get('/tasks/user');
     syncedTask = find(memberTasks, findAssignedTask);
@@ -103,11 +101,9 @@ describe('POST /tasks/:id/approve/:userId', () => {
     await member2.post(`/tasks/${task._id}/approve/${member._id}`);
     await member.sync();
 
-    expect(member.notifications.length).to.equal(3);
+    expect(member.notifications.length).to.equal(2);
     expect(member.notifications[1].type).to.equal('GROUP_TASK_APPROVED');
     expect(member.notifications[1].data.message).to.equal(t('yourTaskHasBeenApproved', { taskText: task.text }));
-    expect(member.notifications[2].type).to.equal('SCORED_TASK');
-    expect(member.notifications[2].data.message).to.equal(t('yourTaskHasBeenApproved', { taskText: task.text }));
 
     memberTasks = await member.get('/tasks/user');
     syncedTask = find(memberTasks, findAssignedTask);

@@ -5129,6 +5129,8 @@ const weapon = {
     notes: t('weaponSpecialSummer2020MageNotes', { int: 15, per: 7 }),
     value: 90,
     int: 15,
+    per: 7,
+    twoHanded: true,
   },
   summer2020Healer: {
     event: EVENTS.summer2020,

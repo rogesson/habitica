@@ -388,6 +388,7 @@
               <select-tag :selected-tags="task.tags"
                           :all-tags="user.tags"
                           @changed="task.tags = $event"
+                          @addNew="addTag"
                           ref="selectTag" />
             </div>
           </div>
@@ -845,6 +846,8 @@
 
       h3 {
         height: 1.5rem;
+        // Condensed is the default for h3
+        font-family: Roboto;
         font-size: 14px;
         font-weight: bold;
         font-stretch: normal;
@@ -1206,7 +1209,12 @@ export default {
     document.removeEventListener('keyup', this.handleEsc);
   },
   methods: {
-    ...mapActions({ saveTask: 'tasks:save', destroyTask: 'tasks:destroy', createTask: 'tasks:create' }),
+    ...mapActions({
+      saveTask: 'tasks:save',
+      destroyTask: 'tasks:destroy',
+      createTask: 'tasks:create',
+      createTag: 'tags:createTag',
+    }),
     async syncTask () {
       if (this.task && this.task.group) {
         this.managerNotes = this.task.group.managerNotes || null;
@@ -1397,6 +1405,11 @@ export default {
       if (this.$refs.popup && !this.$refs.popup.$el.parentNode.contains(e.target)) {
         this.closeTagsPopup();
       }
+    },
+    async addTag (name) {
+      const tagResult = await this.createTag({ name });
+
+      this.task.tags.push(tagResult.id);
     },
   },
 };

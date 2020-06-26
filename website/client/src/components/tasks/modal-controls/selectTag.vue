@@ -13,6 +13,7 @@
           <b-form-input type="text"
                         :placeholder="$t('enterTag')"
                         v-model="search"
+                        @keyup.enter="handleSubmit"
           />
         </div>
 
@@ -26,7 +27,10 @@
         <tag-list :tags="selectedTagsAsObjects"
                   @remove-tag="removeTag($event)"/>
       </template>
-      <div class="item-group">
+      <div :class="{
+        'item-group': true,
+        'add-new': availableToSelect.length === 0 && search !== ''
+      }">
         <b-dropdown-item-button
           v-for="tag in availableToSelect"
           :key="tag.id"
@@ -35,17 +39,17 @@
           :class="{ 'none': tag.id === 'none', selectListItem: true }"
         >
           <div class="label" v-markdown="tag.name"></div>
+          <div class="challenge" v-if="tag.challenge">{{$t('challenge')}}</div>
         </b-dropdown-item-button>
+
+        <div class="hint">
+          {{$t('pressEnterToAddTag', { tagName: search })}}
+        </div>
       </div>
     </b-dropdown>
 
   </div>
 </template>
-
-<style lang="scss" scoped>
-  @import '~@/assets/scss/colors.scss';
-
-</style>
 
 <style lang="scss">
   @import '~@/assets/scss/colors.scss';
@@ -75,17 +79,64 @@
 
     .tag-item button {
       height: $itemHeight;
+      display: flex;
 
       .label {
         height: 1.5rem;
         font-size: 14px;
         line-height: 1.71;
+        flex: 1;
+      }
+
+      .challenge {
+        height: 1rem;
+        font-size: 12px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.33;
+        letter-spacing: normal;
+        text-align: right;
+        color: $gray-100;
+        align-self: center;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        margin-right: 0.25rem;
+      }
+
+      &:hover {
+        .challenge {
+          color: $purple-300;
+        }
       }
     }
 
     .item-group {
       max-height: #{5*$itemHeight};
       overflow-y: scroll;
+
+      &.add-new {
+        height: 30px;
+
+        .hint {
+          display: block;
+        }
+      }
+    }
+
+    .hint {
+      display: none;
+      height: 2rem;
+      font-size: 12px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.33;
+      letter-spacing: normal;
+      color: $gray-100;
+
+      margin-left: 0.75rem;
+      margin-top: 0.5rem;
     }
   }
 
@@ -148,6 +199,12 @@ export default {
     wasOpened () {
       this.isOpened = true;
       this.preventHide = true;
+    },
+    handleSubmit () {
+      const { search } = this;
+      this.$emit('addNew', search);
+
+      this.search = '';
     },
   },
   computed: {

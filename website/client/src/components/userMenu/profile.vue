@@ -757,6 +757,7 @@ export default {
         lock,
         member,
         staff,
+        close: svgClose,
       }),
       adminToolsLoaded: false,
       userIdToMessage: '',
